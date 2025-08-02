@@ -6,15 +6,16 @@ import { CustomButton } from '../components/CustomButton';
 import { OrderCard } from '../components/OrderCard';
 import { orderService } from '../services/orderService';
 import { Colors } from '../Constants/colors';
-import { Order } from '../types';
+import { Order, UserRole } from '../types';
 
 type OrderListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'OrderList'>;
 
 interface OrderListScreenProps {
   navigation: OrderListScreenNavigationProp;
+  role: UserRole;
 }
 
-export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation }) => {
+export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, role }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);

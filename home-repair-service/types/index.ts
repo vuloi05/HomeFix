@@ -32,4 +32,13 @@ export type RootStackParamList = {
   ServiceForm: undefined;
   Confirmation: { orderId: string };
   OrderList: undefined;
-}; 
+  Worker: undefined;
+  Admin: undefined;
+};
+
+export type UserRole = 'customer' | 'worker' | 'admin' | null;
+
+export interface RoleScreenProps {
+  role: UserRole;
+  onSwitchRole?: (role: UserRole) => void;
+} 

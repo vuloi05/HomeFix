@@ -8,15 +8,16 @@ import { ServiceCard } from '../components/ServiceCard';
 import { SERVICES } from '../Constants/services';
 import { orderService } from '../services/orderService';
 import { Colors } from '../Constants/colors';
-import { ServiceType, OrderFormData } from '../types';
+import { ServiceType, OrderFormData, UserRole } from '../types';
 
 type ServiceFormScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ServiceForm'>;
 
 interface ServiceFormScreenProps {
   navigation: ServiceFormScreenNavigationProp;
+  role: UserRole;
 }
 
-export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation }) => {
+export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation, role }) => {
   const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
   const [formData, setFormData] = useState<OrderFormData>({
     customerName: '',
@@ -152,7 +153,7 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
           <CustomInput
             label="Ghi chú (tùy chọn)"
             placeholder="Mô tả chi tiết vấn đề cần sửa chữa"
-            value={formData.notes}
+            value={formData.notes ?? ''}
             onChangeText={(text) => handleInputChange('notes', text)}
             multiline
             numberOfLines={4}

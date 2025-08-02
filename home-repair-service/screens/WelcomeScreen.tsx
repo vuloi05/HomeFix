@@ -1,19 +1,59 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Modal, TouchableOpacity, View as RNView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
+import { RootStackParamList, UserRole } from '../types';
 import { CustomButton } from '../components/CustomButton';
 import { Colors } from '../Constants/colors';
+import { CustomInput } from '../components/CustomInput';
+import { Ionicons } from '@expo/vector-icons';
 
 type WelcomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Welcome'>;
 
 interface WelcomeScreenProps {
   navigation: WelcomeScreenNavigationProp;
+  role: UserRole;
+  setRole: (role: UserRole) => void;
+  setShowAdminModal: (show: boolean) => void;
+  setAdminPassword: (pw: string) => void;
 }
 
-export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
+export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, role, setRole, setShowAdminModal, setAdminPassword }) => {
+  const [showRoleSheet, setShowRoleSheet] = React.useState(false);
+  const [showAdminPwModal, setShowAdminPwModal] = React.useState(false);
+  const [adminPw, setAdminPw] = React.useState('');
+  const [adminPwError, setAdminPwError] = React.useState('');
+
+  React.useEffect(() => {
+    if (role === 'customer') {
+      // Nếu đang ở WelcomeScreen, tự động chuyển sang ServiceFormScreen
+      navigation.navigate('ServiceForm');
+    }
+  }, [role]);
+
   const handleGetStarted = () => {
     navigation.navigate('ServiceForm');
+  };
+
+  const handleSelectRole = (role: UserRole) => {
+    setShowRoleSheet(false);
+    if (role === 'admin') {
+      setShowAdminPwModal(true);
+    } else if (role === 'worker') {
+      setRole('worker');
+    } else {
+      setRole('customer');
+    }
+  };
+
+  const handleAdminLogin = () => {
+    if (adminPw === 'admin123') {
+      setRole('admin');
+      setShowAdminPwModal(false);
+      setAdminPw('');
+      setAdminPwError('');
+    } else {
+      setAdminPwError('Sai mật khẩu!');
+    }
   };
 
   return (
@@ -55,13 +95,66 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
       </View>
 
       {/* Get Started Button */}
-      <View style={styles.buttonContainer}>
+      <View style={{ alignItems: 'center', marginTop: 16 }}>
+        <Text style={{ color: Colors.textSecondary, fontSize: 15, marginBottom: 8 }}>
+          Hãy chọn vai trò để tiếp tục sử dụng ứng dụng.
+        </Text>
         <CustomButton
-          title="Bắt đầu đặt dịch vụ"
-          onPress={handleGetStarted}
-          style={styles.getStartedButton}
+          title="Chọn vai trò"
+          onPress={() => setShowRoleSheet(true)}
+          style={{ minWidth: 160 }}
         />
       </View>
+      {/* Bottom sheet chọn vai trò */}
+      <Modal
+        visible={showRoleSheet}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowRoleSheet(false)}
+      >
+        <RNView style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.3)' }}>
+          <RNView style={{ backgroundColor: '#fff', borderTopLeftRadius: 16, borderTopRightRadius: 16, padding: 24 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' }}>Chọn vai trò</Text>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 12 }} onPress={() => handleSelectRole('customer')}>
+              <Ionicons name="person-outline" size={24} color={Colors.primary} style={{ marginRight: 12 }} />
+              <Text style={{ fontSize: 16 }}>Khách hàng</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 12 }} onPress={() => handleSelectRole('worker')}>
+              <Ionicons name="construct-outline" size={24} color={Colors.primary} style={{ marginRight: 12 }} />
+              <Text style={{ fontSize: 16 }}>Thợ sửa chữa</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 12 }} onPress={() => handleSelectRole('admin')}>
+              <Ionicons name="shield-checkmark-outline" size={24} color={Colors.primary} style={{ marginRight: 12 }} />
+              <Text style={{ fontSize: 16 }}>Admin</Text>
+            </TouchableOpacity>
+            <CustomButton title="Đóng" onPress={() => setShowRoleSheet(false)} variant="outline" style={{ marginTop: 16 }} />
+          </RNView>
+        </RNView>
+      </Modal>
+      {/* Modal nhập mật khẩu admin */}
+      <Modal
+        visible={showAdminPwModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowAdminPwModal(false)}
+      >
+        <RNView style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', justifyContent: 'center', alignItems: 'center' }}>
+          <RNView style={{ backgroundColor: '#fff', borderRadius: 12, padding: 24, width: 300 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 12 }}>Nhập mật khẩu Admin</Text>
+            <CustomInput
+              placeholder="Mật khẩu admin"
+              value={adminPw}
+              onChangeText={setAdminPw}
+              secureTextEntry
+              error={adminPwError}
+            />
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 16 }}>
+              <CustomButton title="Hủy" onPress={() => { setShowAdminPwModal(false); setAdminPw(''); setAdminPwError(''); }} variant="outline" style={{ marginRight: 8 }} />
+              <CustomButton title="Xác nhận" onPress={handleAdminLogin} />
+            </View>
+          </RNView>
+        </RNView>
+      </Modal>
     </View>
   );
 };

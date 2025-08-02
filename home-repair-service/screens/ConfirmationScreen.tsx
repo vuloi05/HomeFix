@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../types';
+import { RootStackParamList, UserRole } from '../types';
 import { CustomButton } from '../components/CustomButton';
 import { Colors } from '../Constants/colors';
 
@@ -12,9 +12,10 @@ type ConfirmationScreenRouteProp = RouteProp<RootStackParamList, 'Confirmation'>
 interface ConfirmationScreenProps {
   navigation: ConfirmationScreenNavigationProp;
   route: ConfirmationScreenRouteProp;
+  role: UserRole;
 }
 
-export const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ navigation, route }) => {
+export const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ navigation, route, role }) => {
   const { orderId } = route.params;
 
   const handleGoHome = () => {
