@@ -1,3 +1,12 @@
+
+export interface OrderFormData {
+  customerName: string;
+  phoneNumber: string;
+  address: string;
+  serviceType: string;
+  requestedTime: string;
+  notes?: string;
+}
 export interface ServiceType {
   id: string;
   name: string;
@@ -18,14 +27,6 @@ export interface Order {
   notes?: string;
 }
 
-export interface OrderFormData {
-  customerName: string;
-  phoneNumber: string;
-  address: string;
-  serviceType: string;
-  requestedTime: string;
-  notes?: string;
-}
 
 export type RootStackParamList = {
   Welcome: undefined;

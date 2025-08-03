@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { CustomButton } from '../components/CustomButton';
 import { OrderCard } from '../components/OrderCard';
-import { orderService } from '../services/orderService';
+import { useOrderService } from '../services/orderService';
 import { Colors } from '../Constants/colors';
 import { Order, UserRole } from '../types';
 
@@ -16,34 +16,20 @@ interface OrderListScreenProps {
 }
 
 export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, role }) => {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
+
+  const { getOrders, updateOrderStatus, isLoading } = useOrderService();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<Order['status'] | 'all'>('all');
+  const orders = getOrders();
 
-  const loadOrders = async () => {
-    try {
-      setLoading(true);
-      const allOrders = await orderService.getAllOrders();
-      setOrders(allOrders);
-    } catch (error) {
-      Alert.alert('Lỗi', 'Không thể tải danh sách đơn hàng');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRefresh = async () => {
+  const handleRefresh = () => {
     setRefreshing(true);
-    await loadOrders();
-    setRefreshing(false);
+    setTimeout(() => setRefreshing(false), 500); // context sẽ tự cập nhật
   };
 
   const handleStatusChange = async (orderId: string, newStatus: Order['status']) => {
     try {
-      await orderService.updateOrderStatus(orderId, newStatus);
-      // Reload orders after status change
-      await loadOrders();
+      await updateOrderStatus(orderId, newStatus);
       Alert.alert('Thành công', 'Đã cập nhật trạng thái đơn hàng');
     } catch (error) {
       Alert.alert('Lỗi', 'Không thể cập nhật trạng thái đơn hàng');
@@ -69,9 +55,8 @@ export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, ro
     return orders.filter(order => order.status === status).length;
   };
 
-  useEffect(() => {
-    loadOrders();
-  }, []);
+
+  // Không cần useEffect loadOrders vì context đã tự đồng bộ
 
   const renderStatusFilter = () => (
     <View style={styles.filterContainer}>

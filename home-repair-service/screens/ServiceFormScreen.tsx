@@ -6,7 +6,7 @@ import { CustomButton } from '../components/CustomButton';
 import { CustomInput } from '../components/CustomInput';
 import { ServiceCard } from '../components/ServiceCard';
 import { SERVICES } from '../Constants/services';
-import { orderService } from '../services/orderService';
+import { useOrderService } from '../services/orderService';
 import { Colors } from '../Constants/colors';
 import { ServiceType, OrderFormData, UserRole } from '../types';
 
@@ -65,6 +65,8 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
     setFormData(prev => ({ ...prev, serviceType: service.name }));
   };
 
+  const { createOrder } = useOrderService();
+
   const handleSubmit = async () => {
     if (!validateForm()) {
       return;
@@ -72,7 +74,7 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
 
     setIsLoading(true);
     try {
-      const orderId = await orderService.createOrder(formData);
+      const orderId = await createOrder(formData);
       navigation.navigate('Confirmation', { orderId });
     } catch (error) {
       Alert.alert('Lỗi', error instanceof Error ? error.message : 'Có lỗi xảy ra. Vui lòng thử lại.');

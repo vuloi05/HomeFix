@@ -1,58 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Alert } from 'react-native';
 import { RoleScreenProps, Order } from '../types';
 import { Colors } from '../Constants/colors';
 import { OrderCard } from '../components/OrderCard';
 import { CustomButton } from '../components/CustomButton';
+import { useOrderService } from '../services/orderService';
 
-// Dữ liệu mẫu cho thợ test
-const MOCK_ORDERS: Order[] = [
-  {
-    id: 'order001',
-    customerName: 'Nguyễn Văn A',
-    phoneNumber: '0901234567',
-    address: '123 Lê Lợi, Q.1, TP.HCM',
-    serviceType: 'Sửa điện',
-    requestedTime: '2025-08-03 09:00',
-    status: 'pending',
-    createdAt: new Date(),
-    notes: 'Kiểm tra ổ cắm bị hỏng',
-  },
-  {
-    id: 'order002',
-    customerName: 'Trần Thị B',
-    phoneNumber: '0912345678',
-    address: '456 Nguyễn Trãi, Q.5, TP.HCM',
-    serviceType: 'Sửa nước',
-    requestedTime: '2025-08-03 14:00',
-    status: 'confirmed',
-    createdAt: new Date(),
-    notes: '',
-  },
-  {
-    id: 'order003',
-    customerName: 'Lê Văn C',
-    phoneNumber: '0987654321',
-    address: '789 Cách Mạng Tháng 8, Q.10, TP.HCM',
-    serviceType: 'Sửa máy lạnh',
-    requestedTime: '2025-08-02 16:00',
-    status: 'in-progress',
-    createdAt: new Date(),
-    notes: 'Máy lạnh không lạnh',
-  },
-  {
-    id: 'order004',
-    customerName: 'Phạm Thị D',
-    phoneNumber: '0978123456',
-    address: '12 Võ Thị Sáu, Q.3, TP.HCM',
-    serviceType: 'Sửa điện',
-    requestedTime: '2025-08-01 10:00',
-    status: 'completed',
-    createdAt: new Date(),
-    notes: '',
-  },
-];
+
 
 const STATUS_OPTIONS = [
   { key: 'all', label: 'Tất cả' },
@@ -62,13 +17,19 @@ const STATUS_OPTIONS = [
   { key: 'completed', label: 'Hoàn thành' },
 ];
 
-const WorkerScreen: React.FC<RoleScreenProps> = () => {
-  const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
-  const [selectedStatus, setSelectedStatus] = useState<string>('all');
 
-  const handleStatusChange = (orderId: string, newStatus: Order['status']) => {
-    setOrders(prev => prev.map(order => order.id === orderId ? { ...order, status: newStatus } : order));
-    Alert.alert('Thành công', 'Đã cập nhật trạng thái đơn hàng!');
+const WorkerScreen: React.FC<RoleScreenProps> = () => {
+  const { getOrders, updateOrderStatus } = useOrderService();
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
+  const orders = getOrders();
+
+  const handleStatusChange = async (orderId: string, newStatus: Order['status']) => {
+    try {
+      await updateOrderStatus(orderId, newStatus);
+      Alert.alert('Thành công', 'Đã cập nhật trạng thái đơn hàng!');
+    } catch {
+      Alert.alert('Lỗi', 'Không thể cập nhật trạng thái đơn hàng!');
+    }
   };
 
   const handleOrderPress = (order: Order) => {
