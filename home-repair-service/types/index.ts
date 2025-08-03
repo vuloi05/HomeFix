@@ -25,6 +25,8 @@ export interface Order {
   status: 'pending' | 'confirmed' | 'in-progress' | 'completed' | 'cancelled';
   createdAt: Date;
   notes?: string;
+  userId: string; // id/email/sdt khách hàng
+  assignedWorker?: string; // id/thông tin thợ được giao
 }
 
 

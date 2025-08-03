@@ -4,9 +4,11 @@ import { Order, OrderFormData } from '../types';
 
 interface OrderContextType {
   orders: Order[];
-  addOrder: (orderData: OrderFormData) => Promise<string>;
+  addOrder: (orderData: OrderFormData, userId: string) => Promise<string>;
   updateOrderStatus: (orderId: string, status: Order['status']) => Promise<void>;
+  getOrdersByRole: (role: 'customer' | 'worker' | 'admin', userId?: string, workerId?: string) => Order[];
   loading: boolean;
+  saveOrders: (newOrders: Order[]) => Promise<void>;
 }
 
 const OrderContext = createContext<OrderContextType | null>(null);
@@ -54,17 +56,25 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-  const addOrder = async (orderData: OrderFormData): Promise<string> => {
+  const addOrder = async (orderData: OrderFormData, userId: string): Promise<string> => {
     const orderId = Math.random().toString(36).substring(7);
     const newOrder: Order = {
       id: orderId,
       ...orderData,
       status: 'pending',
       createdAt: new Date(),
+      userId,
     };
-    
     await saveOrders([newOrder, ...orders]);
     return orderId;
+  };
+
+  // Lọc đơn hàng theo vai trò
+  const getOrdersByRole = (role: 'customer' | 'worker' | 'admin', userId?: string, workerId?: string) => {
+    if (role === 'admin') return orders;
+    if (role === 'customer' && userId) return orders.filter(o => o.userId === userId);
+    if (role === 'worker' && workerId) return orders.filter(o => o.assignedWorker === workerId);
+    return [];
   };
 
   const updateOrderStatus = async (orderId: string, status: Order['status']) => {
@@ -75,7 +85,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   return (
-    <OrderContext.Provider value={{ orders, addOrder, updateOrderStatus, loading }}>
+    <OrderContext.Provider value={{ orders, addOrder, updateOrderStatus, getOrdersByRole, loading, saveOrders }}>
       {children}
     </OrderContext.Provider>
   );

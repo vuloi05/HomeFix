@@ -5,10 +5,12 @@ import { RootStackParamList } from '../types';
 import { CustomButton } from '../components/CustomButton';
 import { OrderCard } from '../components/OrderCard';
 import { useOrderService } from '../services/orderService';
+import { useOrders } from '../contexts/OrderContext';
 import { Colors } from '../Constants/colors';
 import { Order, UserRole } from '../types';
 
 type OrderListScreenNavigationProp = StackNavigationProp<RootStackParamList, 'OrderList'>;
+
 
 interface OrderListScreenProps {
   navigation: OrderListScreenNavigationProp;
@@ -16,11 +18,13 @@ interface OrderListScreenProps {
 }
 
 export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, role }) => {
-
-  const { getOrders, updateOrderStatus, isLoading } = useOrderService();
+  // Gán userId test theo role (giống WorkerScreen)
+  const userId = role === 'customer' ? 'customer-demo' : role === 'worker' ? 'worker-demo' : 'admin-demo';
+  const { getOrdersByRole, updateOrderStatus, loading: isLoading } = useOrders();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<Order['status'] | 'all'>('all');
-  const orders = getOrders();
+  // Luôn sắp xếp đơn mới nhất lên đầu (theo createdAt)
+  const orders = getOrdersByRole('customer', userId).slice().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -55,8 +59,9 @@ export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, ro
     return orders.filter(order => order.status === status).length;
   };
 
-
   // Không cần useEffect loadOrders vì context đã tự đồng bộ
+
+
 
   const renderStatusFilter = () => (
     <View style={styles.filterContainer}>
@@ -126,8 +131,7 @@ export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, ro
           <OrderCard
             order={item}
             onPress={handleOrderPress}
-            showActions={true}
-            onStatusChange={handleStatusChange}
+            showActions={false} // chỉ xem, không thao tác
           />
         )}
         refreshControl={

@@ -74,7 +74,9 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
 
     setIsLoading(true);
     try {
-      const orderId = await createOrder(formData);
+      // Giả lập userId cho khách hàng (có thể lấy từ context đăng nhập thực tế)
+      const userId = 'customer-demo';
+      const orderId = await createOrder(formData, userId);
       navigation.navigate('Confirmation', { orderId });
     } catch (error) {
       Alert.alert('Lỗi', error instanceof Error ? error.message : 'Có lỗi xảy ra. Vui lòng thử lại.');

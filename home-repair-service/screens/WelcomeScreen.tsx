@@ -46,7 +46,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, role, 
   };
 
   const handleAdminLogin = () => {
-    if (adminPw === 'admin123') {
+    if (adminPw === '123') {
       setRole('admin');
       setShowAdminPwModal(false);
       setAdminPw('');

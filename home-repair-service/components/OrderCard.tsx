@@ -8,6 +8,7 @@ interface OrderCardProps {
   onPress?: (order: Order) => void;
   showActions?: boolean;
   onStatusChange?: (orderId: string, newStatus: Order['status']) => void;
+  children?: React.ReactNode;
 }
 
 export const OrderCard: React.FC<OrderCardProps> = ({
@@ -15,6 +16,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
   onPress,
   showActions = false,
   onStatusChange,
+  children,
 }) => {
   const getStatusColor = (status: Order['status']) => {
     switch (status) {
@@ -148,6 +150,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           )}
         </View>
       )}
+      {children}
     </TouchableOpacity>
   );
 };
