@@ -1,30 +1,46 @@
+
 # HomeFix - Ứng dụng dịch vụ sửa chữa tại nhà
 
-Ứng dụng React Native demo cung cấp dịch vụ sửa chữa tại nhà với Firebase backend.
+HomeFix là ứng dụng React Native (Expo) mô phỏng quy trình đặt và quản lý dịch vụ sửa chữa tại nhà. Dự án tập trung vào trải nghiệm người dùng, kiến trúc code rõ ràng, dễ mở rộng, phù hợp cho học tập, demo hoặc làm nền tảng phát triển thực tế.
 
-## Tính năng
+## Tính năng nổi bật
 
-### Cho khách hàng:
-- ✅ Đặt dịch vụ sửa chữa
-- ✅ Chọn loại dịch vụ (điện nước, điện lạnh, sửa nhà, v.v.)
-- ✅ Nhập thông tin cá nhân và địa chỉ
-- ✅ Xem xác nhận đơn hàng
-- ✅ Giao diện thân thiện, dễ sử dụng
+### Khách hàng
+- Đặt dịch vụ sửa chữa qua form, chọn loại dịch vụ, nhập thông tin cá nhân
+- Xem xác nhận đơn hàng sau khi đặt thành công
+- Quản lý đơn hàng đã đặt qua tab "Quản lý đơn hàng"
+- Giao diện hiện đại, thân thiện, tối ưu cho mobile
+- Điều hướng mượt mà bằng Bottom Tab ("Đặt dịch vụ" & "Quản lý đơn hàng")
 
-### Cho admin/thợ:
-- ✅ Xem danh sách đơn hàng
-- ✅ Lọc đơn hàng theo trạng thái
-- ✅ Cập nhật trạng thái đơn hàng
-- ✅ Xem chi tiết đơn hàng
+### Thợ / Admin
+- Xem, lọc, cập nhật trạng thái đơn hàng
+- Xem chi tiết đơn hàng
+- (Admin) Quản lý toàn bộ hệ thống (chức năng nâng cao đang phát triển)
 
-## Công nghệ sử dụng
+### Kiến trúc & Công nghệ
+- React Native (Expo) + TypeScript
+- Quản lý state nội bộ (Context API, AsyncStorage)
+- Không phụ thuộc backend thực tế (dễ tích hợp REST API/GraphQL về sau)
+- React Navigation v6 (Stack + Bottom Tab)
+- UI component tuỳ biến, dễ mở rộng
 
-- **Frontend**: React Native với Expo
-- **Backend**: Firebase
-  - Firestore Database
-  - Authentication (có thể mở rộng)
-- **Navigation**: React Navigation v6
-- **UI**: Custom components với TypeScript
+## Cài đặt & chạy thử
+
+1. **Clone repository**
+   ```bash
+   git clone <repository-url>
+   cd home-repair-service
+   ```
+2. **Cài đặt dependencies**
+   ```bash
+   npm install
+   ```
+3. **Chạy ứng dụng**
+   ```bash
+   npm run android   # Android
+   npm run ios       # iOS (macOS)
+   npm run web       # Web
+   ```
 
 ## Cài đặt
 
@@ -39,24 +55,10 @@ cd home-repair-service
 npm install
 ```
 
-### 3. Cấu hình Firebase
 
-1. Tạo project Firebase mới tại [Firebase Console](https://console.firebase.google.com/)
-2. Bật Firestore Database
-3. Cập nhật thông tin Firebase trong file `services/firebase.ts`:
 
-```typescript
-const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "your-messaging-sender-id",
-  appId: "your-app-id"
-};
-```
 
-### 4. Chạy ứng dụng
+### 3. Chạy ứng dụng
 
 ```bash
 # Chạy trên Android
@@ -69,7 +71,8 @@ npm run ios
 npm run web
 ```
 
-## Cấu trúc dự án
+
+## Cấu trúc thư mục
 
 ```
 home-repair-service/
@@ -97,54 +100,54 @@ home-repair-service/
 └── App.tsx            # Main app component
 ```
 
-## Luồng hoạt động
 
-1. **Màn hình chào mừng**: Giới thiệu dịch vụ và nút "Bắt đầu"
-2. **Form đặt dịch vụ**: 
-   - Chọn loại dịch vụ
-   - Nhập thông tin khách hàng
-   - Gửi đơn hàng
-3. **Màn hình xác nhận**: Hiển thị thông báo thành công
-4. **Quản lý đơn hàng**: Dành cho admin/thợ để quản lý
+## Luồng sử dụng
 
-## Cấu hình Firestore
+### Khách hàng
+1. Mở app, chọn vai trò "Khách hàng"
+2. Đặt dịch vụ qua tab "Đặt dịch vụ"
+3. Sau khi đặt thành công, xem xác nhận và mã đơn hàng
+4. Quản lý các đơn đã đặt qua tab "Quản lý đơn hàng"
 
-Tạo collection `orders` với cấu trúc:
+### Thợ / Admin
+1. Mở app, chọn vai trò "Thợ" hoặc "Admin"
+2. Xem, lọc, cập nhật trạng thái đơn hàng
+3. (Admin) Quản lý hệ thống (đang phát triển)
 
-```typescript
-interface Order {
-  customerName: string;
-  phoneNumber: string;
-  address: string;
-  serviceType: string;
-  requestedTime: string;
-  status: 'pending' | 'confirmed' | 'in-progress' | 'completed' | 'cancelled';
-  createdAt: Timestamp;
-  notes?: string;
-}
-```
 
-## Tính năng mở rộng có thể thêm
 
-- [ ] Authentication với Firebase Auth
-- [ ] Push notifications với Firebase Cloud Messaging
-- [ ] Payment integration
-- [ ] Real-time chat giữa khách hàng và thợ
-- [ ] Rating và review system
-- [ ] Location services
-- [ ] Photo upload cho vấn đề cần sửa chữa
+## Định hướng mở rộng
+
+- [ ] Kết nối backend thực tế (REST API, GraphQL, ...)
+- [ ] Đăng nhập/đăng ký (Authentication)
+- [ ] Push notification
+- [ ] Thanh toán online
+- [ ] Chat real-time
+- [ ] Đánh giá, review dịch vụ
+- [ ] Định vị, bản đồ
+- [ ] Upload ảnh vấn đề cần sửa
+
+
+## Hướng dẫn phát triển & đóng góp
+
+- Code style: TypeScript, function component, hooks, Context API
+- Đặt tên biến, hàm rõ ràng, ưu tiên tiếng Anh cho code, tiếng Việt cho UI
+- Tách biệt logic, UI, state, dễ test và mở rộng
+- Đóng góp: fork, tạo pull request, mô tả rõ thay đổi
 
 ## Troubleshooting
-
-### Lỗi Firebase
-- Kiểm tra cấu hình Firebase trong `services/firebase.ts`
-- Đảm bảo Firestore Database đã được bật
-- Kiểm tra rules Firestore cho phép read/write
 
 ### Lỗi Navigation
 - Đảm bảo đã cài đặt đầy đủ dependencies navigation
 - Kiểm tra TypeScript types trong `types/index.ts`
+- Nếu gặp lỗi điều hướng khi dùng Bottom Tab, kiểm tra tên screen và cấu trúc navigator lồng nhau
+
+### Lỗi AsyncStorage
+- Nếu đơn hàng không lưu lại, kiểm tra quyền bộ nhớ và trạng thái AsyncStorage
+
+### Lỗi build Expo
+- Đảm bảo đúng version React Native, Expo, dependencies như trong package.json
 
 ## License
 
-MIT License 
+MIT License
