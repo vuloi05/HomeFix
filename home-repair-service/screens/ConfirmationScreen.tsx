@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, CommonActions } from '@react-navigation/native';
 import { RootStackParamList, UserRole } from '../types';
 import { CustomButton } from '../components/CustomButton';
 import { Colors } from '../Constants/colors';
@@ -19,11 +19,11 @@ export const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ navigati
   const { orderId } = route.params;
 
   const handleGoHome = () => {
-    navigation.navigate('Welcome');
+    navigation.navigate('CustomerTab', { screen: 'ServiceForm' });
   };
 
   const handleViewOrders = () => {
-    navigation.navigate('OrderList');
+    navigation.navigate('CustomerTab', { screen: 'OrderList' });
   };
 
   return (
@@ -57,7 +57,7 @@ export const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ navigati
           <Text style={styles.stepsTitle}>Các bước tiếp theo:</Text>
           <View style={styles.step}>
             <Text style={styles.stepNumber}>1</Text>
-            <Text style={styles.stepText}>Chúng tôi sẽ xác nhận đơn hàng trong vòng 30 phút</Text>
+            <Text style={styles.stepText}>Chúng tôi sẽ xác nhận đơn hàng trong vòng 5 phút</Text>
           </View>
           <View style={styles.step}>
             <Text style={styles.stepNumber}>2</Text>
@@ -73,7 +73,7 @@ export const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ navigati
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
         <CustomButton
-          title="Về trang chủ"
+          title="Tiếp tục đặt dịch vụ"
           onPress={handleGoHome}
           variant="outline"
           style={styles.button}

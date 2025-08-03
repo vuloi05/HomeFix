@@ -35,7 +35,7 @@ export type RootStackParamList = {
   OrderList: undefined;
   Worker: undefined;
   Admin: undefined;
-  CustomerTab: undefined;
+  CustomerTab: { screen?: 'ServiceForm' | 'OrderList' } | undefined;
 };
 
 export type UserRole = 'customer' | 'worker' | 'admin' | null;
