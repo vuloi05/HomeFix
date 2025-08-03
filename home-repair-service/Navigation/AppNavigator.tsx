@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RootStackParamList } from '../types';
 import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { ServiceFormScreen } from '../screens/ServiceFormScreen';
@@ -15,6 +16,7 @@ import { CustomInput } from '../components/CustomInput';
 import { Ionicons } from '@expo/vector-icons';
 
 const CustomerStack = createStackNavigator<RootStackParamList>();
+const CustomerTab = createBottomTabNavigator();
 const WorkerStack = createStackNavigator();
 const AdminStack = createStackNavigator();
 
@@ -49,7 +51,6 @@ export const AppNavigator: React.FC = () => {
         )}
         {role === 'customer' && (
           <CustomerStack.Navigator
-            initialRouteName="ServiceForm"
             screenOptions={{
               headerStyle: { backgroundColor: Colors.primary },
               headerTintColor: Colors.textLight,
@@ -57,19 +58,45 @@ export const AppNavigator: React.FC = () => {
             }}
           >
             <CustomerStack.Screen
-              name="ServiceForm"
-              children={(props) => <ServiceFormScreen {...props} role={role} />}
-              options={{ title: 'Đặt dịch vụ', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
-            />
+              name="CustomerTab"
+              options={{ headerShown: false }}
+            >
+              {() => (
+                <CustomerTab.Navigator
+                  screenOptions={({ route }) => ({
+                    tabBarIcon: ({ color, size }) => {
+                      let iconName = '';
+                      if (route.name === 'ServiceForm') {
+                        iconName = 'home-outline';
+                      } else if (route.name === 'OrderList') {
+                        iconName = 'list-outline';
+                      }
+                      return <Ionicons name={iconName as any} size={size} color={color} />;
+                    },
+                    tabBarActiveTintColor: Colors.primary,
+                    tabBarInactiveTintColor: Colors.textSecondary,
+                    headerShown: true,
+                    headerTitleAlign: 'center',
+                    headerLeft: getHeaderLeft(setRole),
+                  })}
+                >
+                  <CustomerTab.Screen
+                    name="ServiceForm"
+                    children={(props) => <ServiceFormScreen {...props} role={role} />}
+                    options={{ title: 'Đặt dịch vụ' }}
+                  />
+                  <CustomerTab.Screen
+                    name="OrderList"
+                    children={(props) => <OrderListScreen {...props} role={role} />}
+                    options={{ title: 'Quản lý đơn hàng' }}
+                  />
+                </CustomerTab.Navigator>
+              )}
+            </CustomerStack.Screen>
             <CustomerStack.Screen
               name="Confirmation"
               children={(props) => <ConfirmationScreen {...props} role={role} />}
               options={{ title: 'Xác nhận', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
-            />
-            <CustomerStack.Screen
-              name="OrderList"
-              children={(props) => <OrderListScreen {...props} role={role} />}
-              options={{ title: 'Quản lý đơn hàng', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
             />
           </CustomerStack.Navigator>
         )}
