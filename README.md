@@ -57,7 +57,34 @@ Welcome screen:
 - **Backend**: Mock only (easily replaceable with REST/GraphQL)
 - **Scalable Design**: Modular file structure, easy to extend
 
-## 🚀 Getting Started
+
+
+## 🧑‍💻 Using & Editing Mock Data
+
+- Sample user data (customers/technicians) is located in `home-repair-service/mock-data/`:
+  - `mockCustomers.json`: List of sample customers
+  - `mockWorkers.json`: List of sample technicians
+- When selecting a role, you will pick a sample user to log in quickly.
+- You can edit/add sample users by modifying the corresponding JSON file (add/edit/delete users, change info, etc.).
+- When creating an order, the form will be auto-filled with the selected sample user's info.
+
+### Sample Customers
+
+| ID  | Name           | Phone       | Address                        | Note                          |
+|-----|----------------|------------|-------------------------------|-------------------------------|
+| c1  | Nguyen Van A   | 0901234567 | 123 Le Loi, Q.1, HCMC         | Regular customer, priority.   |
+| c2  | Tran Thi B     | 0912345678 | 456 Tran Hung Dao, Q.5, HCMC  | Needs air conditioner repair. |
+| c3  | Le Van C       | 0987654321 | 789 Nguyen Trai, Q.10, HCMC   | Has small children, needs quick service. |
+
+### Sample Technicians
+
+| ID  | Name           | Phone       | Specialty    | Rating | Note                                 |
+|-----|----------------|------------|-------------|--------|--------------------------------------|
+| w1  | Pham Quang D   | 0932123456 | Plumbing    | 4.8    | 5 years experience, on-site service. |
+| w2  | Nguyen Thi E   | 0943234567 | Aircon      | 4.6    | Expert in AC/fridge repair.          |
+| w3  | Vo Van F       | 0976543210 | Carpentry   | 4.7    | Custom woodwork at home.             |
+
+---
 
 1. **Clone repository**
    ```bash

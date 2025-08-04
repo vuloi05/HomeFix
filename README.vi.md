@@ -52,6 +52,35 @@ HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và T
 - **Backend**: Mock (dễ tích hợp REST/GraphQL thực tế)
 - **Thiết kế mở rộng**: Cấu trúc module, dễ phát triển thêm
 
+
+
+## 🧑‍💻 Hướng dẫn sử dụng mock data
+
+- Dữ liệu user mẫu (khách hàng/thợ) nằm trong thư mục `home-repair-service/mock-data/`:
+  - `mockCustomers.json`: Danh sách khách hàng mẫu
+  - `mockWorkers.json`: Danh sách thợ mẫu
+- Khi chọn vai trò, bạn sẽ chọn 1 user mẫu để đăng nhập nhanh.
+- Có thể chỉnh sửa/thêm user mẫu bằng cách sửa file JSON tương ứng (thêm/sửa/xóa user, đổi thông tin, ...).
+- Khi tạo đơn, thông tin user mẫu sẽ tự động điền vào form.
+
+### Khách hàng mẫu
+
+| ID  | Tên            | Số điện thoại | Địa chỉ                        | Ghi chú                      |
+|-----|----------------|---------------|-------------------------------|------------------------------|
+| c1  | Nguyen Van A   | 0901234567    | 123 Le Loi, Q.1, TP.HCM       | Khách quen, ưu tiên phục vụ. |
+| c2  | Tran Thi B     | 0912345678    | 456 Tran Hung Dao, Q.5, TP.HCM| Yêu cầu sửa điện lạnh.       |
+| c3  | Le Van C       | 0987654321    | 789 Nguyen Trai, Q.10, TP.HCM | Nhà có trẻ nhỏ, cần sửa nhanh.|
+
+### Thợ mẫu
+
+| ID  | Tên            | Số điện thoại | Chuyên môn   | Đánh giá | Ghi chú                        |
+|-----|----------------|---------------|--------------|----------|-------------------------------|
+| w1  | Pham Quang D   | 0932123456    | Điện nước    | 4.8      | Kinh nghiệm 5 năm, phục vụ tận nơi. |
+| w2  | Nguyen Thi E   | 0943234567    | Điện lạnh    | 4.6      | Chuyên sửa máy lạnh, tủ lạnh.      |
+| w3  | Vo Van F       | 0976543210    | Thợ mộc      | 4.7      | Nhận đóng sửa đồ gỗ tại nhà.       |
+
+---
+
 ## 🚀 Cài đặt & chạy thử
 
 1. **Clone repository**
