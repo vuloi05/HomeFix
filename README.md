@@ -20,7 +20,7 @@ HomeFix is a mobile application built with React Native (Expo) and TypeScript th
 
 ## 📱 Screenshots
 
-![App Screenshot](https://via.placeholder.com/200x400)
+![App Screenshot]("D:\HomeFix\App Welcome.jpg")
 
 ## 🧱 Architecture
 
