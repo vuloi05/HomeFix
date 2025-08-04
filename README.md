@@ -13,13 +13,33 @@
 ## Overview
 HomeFix is a mobile application built with React Native (Expo) and TypeScript that simulates a home repair service booking system. The project focuses on user experience, clean and scalable code architecture, and is suitable for learning, demos, or as a foundation for real-world development.
 
-## 🔑 Features
 
-| Role        | Functionality                                                                 |
-|-------------|-------------------------------------------------------------------------------|
-| Customer    | - Book services via dynamic form <br> - View booking confirmation <br> - Manage orders via "Order Management" tab <br> - Modern, mobile-optimized UI |
-| Technician  | - View, filter, and update order statuses <br> - View order details           |
-| Admin       | - (Coming soon) Full system management                                        |
+## 🔑 User Flow & Features
+
+### 1. Role Selection & Sample Login
+- On app launch, user selects a role: **Customer** or **Technician** (Admin coming soon).
+- Then, pick a sample user to quickly log in (sample data provided).
+
+### 2. Customer Flow
+- Book a service via a dynamic form (auto-filled with sample user info).
+- View confirmation of the newly created order.
+- Manage all your orders in the "Order Management" tab (see only your own orders).
+- Receive notification when a technician accepts your order.
+
+### 3. Technician Flow
+- See a list of **unassigned orders** or **orders assigned to yourself** only.
+- Accept new orders (only one technician can accept each order; others will no longer see it).
+- Unassign (cancel) an order (order returns to unassigned state, visible to all technicians again).
+- Update order status (only for orders you have accepted).
+
+### 4. Admin Flow (coming soon)
+- Manage the whole system, view all orders, users, etc.
+
+### 5. UI & Experience
+- Modern, mobile-optimized UI.
+- Multiple order statuses, role-based order detail popups.
+
+---
 
 ## 📱 Screenshots
 
