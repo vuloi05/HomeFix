@@ -1,7 +1,7 @@
+
 ![Nền tảng](https://img.shields.io/badge/platform-React%20Native-blue)
 ![Giấy phép](https://img.shields.io/badge/license-MIT-green)
 ![Trạng thái](https://img.shields.io/badge/status-beta-orange)
-
 
 # HomeFix - Ứng dụng dịch vụ sửa chữa tại nhà
 
@@ -9,7 +9,6 @@
 
 ## Tổng quan
 HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và TypeScript, mô phỏng quy trình đặt và quản lý dịch vụ sửa chữa tại nhà. Dự án tập trung vào trải nghiệm người dùng, kiến trúc code rõ ràng, dễ mở rộng, phù hợp cho học tập, demo hoặc làm nền tảng phát triển thực tế.
-
 
 ## 🔑 Luồng người dùng & Tính năng
 
@@ -36,13 +35,23 @@ HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và T
 - Giao diện hiện đại, tối ưu mobile.
 - Đa dạng trạng thái đơn, popup chi tiết đơn hàng theo vai trò.
 
----
+## � Cài đặt & chạy thử
 
-## 📱 Ảnh minh họa
-
-![Màn hình chào mừng](./App%20Welcome.jpg)
-
-<!-- Thêm các ảnh chụp màn hình khác nếu có -->
+1. **Clone repository**
+   ```bash
+   git clone <repository-url>
+   cd home-repair-service
+   ```
+2. **Cài đặt dependencies**
+   ```bash
+   npm install
+   ```
+3. **Chạy ứng dụng**
+   ```bash
+   npm run android   # Android
+   npm run ios       # iOS (macOS)
+   npm run web       # Web
+   ```
 
 ## 🧱 Tổng quan kiến trúc
 
@@ -52,7 +61,18 @@ HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và T
 - **Backend**: Mock (dễ tích hợp REST/GraphQL thực tế)
 - **Thiết kế mở rộng**: Cấu trúc module, dễ phát triển thêm
 
+## 📂 Cấu trúc thư mục
 
+```
+home-repair-service/
+├── components/          # Component tái sử dụng
+├── screens/            # Các màn hình
+├── services/           # Dịch vụ API
+├── Constants/          # Hằng số ứng dụng
+├── types/              # Định nghĩa TypeScript
+├── Navigation/         # Điều hướng
+└── App.tsx            # Component gốc
+```
 
 ## 🧑‍💻 Hướng dẫn sử dụng mock data
 
@@ -79,38 +99,11 @@ HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và T
 | w2  | Nguyen Thi E   | 0943234567    | Điện lạnh    | 4.6      | Chuyên sửa máy lạnh, tủ lạnh.      |
 | w3  | Vo Van F       | 0976543210    | Thợ mộc      | 4.7      | Nhận đóng sửa đồ gỗ tại nhà.       |
 
----
+## � Ảnh minh họa
 
-## 🚀 Cài đặt & chạy thử
+![Màn hình chào mừng](./App%20Welcome.jpg)
 
-1. **Clone repository**
-   ```bash
-   git clone <repository-url>
-   cd home-repair-service
-   ```
-2. **Cài đặt dependencies**
-   ```bash
-   npm install
-   ```
-3. **Chạy ứng dụng**
-   ```bash
-   npm run android   # Android
-   npm run ios       # iOS (macOS)
-   npm run web       # Web
-   ```
-
-## 📂 Cấu trúc thư mục
-
-```
-home-repair-service/
-├── components/          # Component tái sử dụng
-├── screens/            # Các màn hình
-├── services/           # Dịch vụ API
-├── Constants/          # Hằng số ứng dụng
-├── types/              # Định nghĩa TypeScript
-├── Navigation/         # Điều hướng
-└── App.tsx            # Component gốc
-```
+<!-- Thêm các ảnh chụp màn hình khác nếu có -->
 
 ## 🤝 Hướng dẫn đóng góp
 
@@ -130,7 +123,7 @@ home-repair-service/
 - [ ] Định vị, bản đồ
 - [ ] Upload ảnh vấn đề cần sửa
 
----
+## 📚 Tài liệu thêm
 
 > Xem thêm: [docs/Troubleshooting.md](./docs/Troubleshooting.md)
 > 

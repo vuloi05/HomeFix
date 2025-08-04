@@ -1,10 +1,10 @@
 
 
 
+
 ![Platform](https://img.shields.io/badge/platform-React%20Native-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-beta-orange)
-
 
 # HomeFix - Home Repair Service App
 
@@ -12,7 +12,6 @@
 
 ## Overview
 HomeFix is a mobile application built with React Native (Expo) and TypeScript that simulates a home repair service booking system. The project focuses on user experience, clean and scalable code architecture, and is suitable for learning, demos, or as a foundation for real-world development.
-
 
 ## 🔑 User Flow & Features
 
@@ -39,15 +38,23 @@ HomeFix is a mobile application built with React Native (Expo) and TypeScript th
 - Modern, mobile-optimized UI.
 - Multiple order statuses, role-based order detail popups.
 
----
+## � Getting Started
 
-## 📱 Screenshots
-
-Welcome screen:
-
-![Welcome Screen](./App%20Welcome.jpg)
-
-<!-- Add more screenshots here if available -->
+1. **Clone repository**
+   ```bash
+   git clone <repository-url>
+   cd home-repair-service
+   ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Run the app**
+   ```bash
+   npm run android   # Android
+   npm run ios       # iOS (macOS)
+   npm run web       # Web
+   ```
 
 ## 🧱 Architecture
 
@@ -57,7 +64,18 @@ Welcome screen:
 - **Backend**: Mock only (easily replaceable with REST/GraphQL)
 - **Scalable Design**: Modular file structure, easy to extend
 
+## 📂 Folder Structure
 
+```
+home-repair-service/
+├── components/          # Reusable components
+├── screens/            # App screens
+├── services/           # API services
+├── Constants/          # App constants
+├── types/              # TypeScript types
+├── Navigation/         # Navigation setup
+└── App.tsx            # Main app component
+```
 
 ## 🧑‍💻 Using & Editing Mock Data
 
@@ -84,36 +102,13 @@ Welcome screen:
 | w2  | Nguyen Thi E   | 0943234567 | Aircon      | 4.6    | Expert in AC/fridge repair.          |
 | w3  | Vo Van F       | 0976543210 | Carpentry   | 4.7    | Custom woodwork at home.             |
 
----
+## 📱 Screenshots
 
-1. **Clone repository**
-   ```bash
-   git clone <repository-url>
-   cd home-repair-service
-   ```
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-3. **Run the app**
-   ```bash
-   npm run android   # Android
-   npm run ios       # iOS (macOS)
-   npm run web       # Web
-   ```
+Welcome screen:
 
-## 📂 Folder Structure
+![Welcome Screen](./App%20Welcome.jpg)
 
-```
-home-repair-service/
-├── components/          # Reusable components
-├── screens/            # App screens
-├── services/           # API services
-├── Constants/          # App constants
-├── types/              # TypeScript types
-├── Navigation/         # Navigation setup
-└── App.tsx            # Main app component
-```
+<!-- Add more screenshots here if available -->
 
 ## 🤝 Contribution Guide
 
@@ -132,8 +127,6 @@ home-repair-service/
 - [ ] Service review & rating
 - [ ] Location & map
 - [ ] Upload problem photos
-
----
 
 ## 📚 Documentation
 
