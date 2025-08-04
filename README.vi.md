@@ -8,7 +8,7 @@
 > 🇬🇧 English: [README.md](./README.md)
 
 ## Tổng quan
-HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và TypeScript, mô phỏng quy trình đặt và quản lý dịch vụ sửa chữa tại nhà. Dự án tập trung vào trải nghiệm người dùng, kiến trúc code rõ ràng, dễ mở rộng, phù hợp cho học tập, demo hoặc làm nền tảng phát triển thực tế.
+HomeFix là ứng dụng di động phát triển bằng React Native (Expo) và TypeScript, mô phỏng quy trình đặt và quản lý dịch vụ sửa chữa tại nhà. Kiến trúc dự án được thiết kế theo hướng rõ ràng, tách biệt trách nhiệm, dễ mở rộng –  làm nền tảng phát triển sản phẩm thực tế.
 
 ## 🔑 Luồng người dùng & Tính năng
 

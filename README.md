@@ -11,7 +11,7 @@
 > 📖 Vietnamese: [README.vi.md](./README.vi.md)
 
 ## Overview
-HomeFix is a mobile application built with React Native (Expo) and TypeScript that simulates a home repair service booking system. The project focuses on user experience, clean and scalable code architecture, and is suitable for learning, demos, or as a foundation for real-world development.
+HomeFix is a mobile application developed with React Native (Expo) and TypeScript, simulating the workflow of booking and managing home repair services. The project architecture is designed with clarity, separation of concerns, and scalability in mind — making it a solid foundation for real-world product development.
 
 ## 🔑 User Flow & Features
 
