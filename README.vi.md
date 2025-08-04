@@ -2,7 +2,10 @@
 ![Giấy phép](https://img.shields.io/badge/license-MIT-green)
 ![Trạng thái](https://img.shields.io/badge/status-beta-orange)
 
+
 # HomeFix - Ứng dụng dịch vụ sửa chữa tại nhà
+
+> 🇬🇧 English: [README.md](./README.md)
 
 ## Tổng quan
 HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và TypeScript, mô phỏng quy trình đặt và quản lý dịch vụ sửa chữa tại nhà. Dự án tập trung vào trải nghiệm người dùng, kiến trúc code rõ ràng, dễ mở rộng, phù hợp cho học tập, demo hoặc làm nền tảng phát triển thực tế.
@@ -17,7 +20,9 @@ HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và T
 
 ## 📱 Ảnh minh họa
 
-![Màn hình đặt dịch vụ](https://via.placeholder.com/200x400)
+![Màn hình chào mừng](./App%20Welcome.jpg)
+
+<!-- Thêm các ảnh chụp màn hình khác nếu có -->
 
 ## 🧱 Tổng quan kiến trúc
 
@@ -85,3 +90,7 @@ home-repair-service/
 ## Giấy phép
 
 MIT License
+
+---
+
+> 🌐 Chuyển sang tiếng Anh: [README.md](./README.md)

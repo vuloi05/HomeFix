@@ -5,7 +5,10 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-beta-orange)
 
+
 # HomeFix - Home Repair Service App
+
+> 📖 Vietnamese: [README.vi.md](./README.vi.md)
 
 ## Overview
 HomeFix is a mobile application built with React Native (Expo) and TypeScript that simulates a home repair service booking system. The project focuses on user experience, clean and scalable code architecture, and is suitable for learning, demos, or as a foundation for real-world development.
@@ -20,7 +23,11 @@ HomeFix is a mobile application built with React Native (Expo) and TypeScript th
 
 ## 📱 Screenshots
 
-![App Screenshot]("D:\HomeFix\App Welcome.jpg")
+Welcome screen:
+
+![Welcome Screen](./App%20Welcome.jpg)
+
+<!-- Add more screenshots here if available -->
 
 ## 🧱 Architecture
 
@@ -88,3 +95,7 @@ home-repair-service/
 ## License
 
 MIT License
+
+---
+
+> 🌐 Switch to Vietnamese: [README.vi.md](./README.vi.md)
