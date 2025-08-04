@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Alert } from 'react-native';
 import { RoleScreenProps, Order } from '../types';
 import { Colors } from '../Constants/colors';
@@ -7,8 +7,7 @@ import { OrderCard } from '../components/OrderCard';
 import { OrderDetailModal } from '../components/OrderDetailModal';
 import { CustomButton } from '../components/CustomButton';
 import { useOrders } from '../contexts/OrderContext';
-
-
+import { useUser } from '../contexts/UserContext';
 
 const STATUS_OPTIONS = [
   { key: 'all', label: 'Tất cả' },
@@ -18,14 +17,13 @@ const STATUS_OPTIONS = [
   { key: 'completed', label: 'Hoàn thành' },
 ];
 
-
 const WorkerScreen: React.FC<RoleScreenProps> = () => {
-  // Giả lập workerId cho thợ (có thể lấy từ context đăng nhập thực tế)
-  const workerId = 'worker-demo';
-  const { orders: allOrders, updateOrderStatus, saveOrders } = useOrders();
+  const { user } = useUser();
+  const workerId = user?.id;
+  const { getOrdersByRole, updateOrderStatus, saveOrders, orders: allOrders } = useOrders();
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
-  // Thợ xem toàn bộ đơn, đơn mới nhất lên đầu
-  const orders = [...allOrders].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  // Lấy đúng danh sách đơn cho thợ: đơn chưa ai nhận hoặc đơn của chính mình
+  const orders = getOrdersByRole('worker', undefined, workerId).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
 
   // Nhận đơn: kiểm tra race condition

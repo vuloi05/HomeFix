@@ -18,9 +18,11 @@ interface OrderListScreenProps {
   role: UserRole;
 }
 
+import { useUser } from '../contexts/UserContext';
+
 export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, role }) => {
-  // Gán userId test theo role (giống WorkerScreen)
-  const userId = role === 'customer' ? 'customer-demo' : role === 'worker' ? 'worker-demo' : 'admin-demo';
+  const { user } = useUser();
+  const userId = role === 'customer' ? user?.id : role === 'worker' ? user?.id : undefined;
   const { getOrdersByRole, updateOrderStatus, loading: isLoading } = useOrders();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<Order['status'] | 'all'>('all');

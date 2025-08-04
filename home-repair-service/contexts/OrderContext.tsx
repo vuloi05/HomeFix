@@ -70,10 +70,11 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   // Lọc đơn hàng theo vai trò
+  // Worker: chỉ thấy đơn chưa ai nhận (assignedWorker undefined) hoặc đơn của chính mình
   const getOrdersByRole = (role: 'customer' | 'worker' | 'admin', userId?: string, workerId?: string) => {
     if (role === 'admin') return orders;
     if (role === 'customer' && userId) return orders.filter(o => o.userId === userId);
-    if (role === 'worker' && workerId) return orders.filter(o => o.assignedWorker === workerId);
+    if (role === 'worker' && workerId) return orders.filter(o => !o.assignedWorker || o.assignedWorker === workerId);
     return [];
   };
 

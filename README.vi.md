@@ -10,13 +10,33 @@
 ## Tổng quan
 HomeFix là ứng dụng di động xây dựng bằng React Native (Expo) và TypeScript, mô phỏng quy trình đặt và quản lý dịch vụ sửa chữa tại nhà. Dự án tập trung vào trải nghiệm người dùng, kiến trúc code rõ ràng, dễ mở rộng, phù hợp cho học tập, demo hoặc làm nền tảng phát triển thực tế.
 
-## 🔑 Tính năng
 
-| Vai trò     | Chức năng chính                                                                 |
-|-------------|---------------------------------------------------------------------------------|
-| Khách hàng  | - Đặt dịch vụ qua form động <br> - Xem xác nhận đơn hàng <br> - Quản lý đơn qua tab "Quản lý đơn hàng" <br> - Giao diện hiện đại, tối ưu mobile |
-| Thợ         | - Xem, lọc, cập nhật trạng thái đơn hàng <br> - Xem chi tiết đơn hàng           |
-| Admin       | - (Sắp ra mắt) Quản lý toàn bộ hệ thống                                         |
+## 🔑 Luồng người dùng & Tính năng
+
+### 1. Chọn vai trò & đăng nhập mẫu
+- Khi mở app, người dùng chọn vai trò: **Khách hàng** hoặc **Thợ** (hoặc Admin sắp ra mắt).
+- Sau đó chọn 1 user mẫu tương ứng để đăng nhập nhanh (dữ liệu mẫu có sẵn).
+
+### 2. Luồng Khách hàng
+- Đặt dịch vụ qua form động (tự động điền thông tin user mẫu).
+- Xem xác nhận đơn hàng vừa tạo.
+- Quản lý tất cả đơn của mình ở tab "Quản lý đơn hàng" (chỉ thấy đơn của chính mình).
+- Nhận thông báo khi đơn được thợ nhận.
+
+### 3. Luồng Thợ
+- Xem danh sách các đơn **chưa ai nhận** hoặc **đơn do chính mình đã nhận**.
+- Nhận đơn mới (chỉ 1 thợ nhận được mỗi đơn, các thợ khác sẽ không còn thấy đơn đó).
+- Hủy nhận đơn (đơn quay lại trạng thái chờ, các thợ khác lại thấy).
+- Cập nhật trạng thái đơn (chỉ với đơn mình đã nhận).
+
+### 4. Luồng Admin (sắp ra mắt)
+- Quản lý toàn bộ hệ thống, xem tất cả đơn hàng, người dùng, ...
+
+### 5. Giao diện & trải nghiệm
+- Giao diện hiện đại, tối ưu mobile.
+- Đa dạng trạng thái đơn, popup chi tiết đơn hàng theo vai trò.
+
+---
 
 ## 📱 Ảnh minh họa
 
