@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, FlatList, Alert } from 'react-native';
 import { RoleScreenProps, Order } from '../types';
 import { Colors } from '../Constants/colors';
 import { OrderCard } from '../components/OrderCard';
+import { OrderDetailModal } from '../components/OrderDetailModal';
 import { CustomButton } from '../components/CustomButton';
 import { useOrders } from '../contexts/OrderContext';
 
@@ -40,14 +41,42 @@ const WorkerScreen: React.FC<RoleScreenProps> = () => {
         Alert.alert('Đơn đã có thợ nhận!');
         return;
       }
-      // Gán assignedWorker
-      const newOrders = allOrders.map(o =>
-        o.id === order.id ? { ...o, assignedWorker: workerId, status: 'confirmed' as Order['status'] } : o
-      );
+      // Gán assignedWorker, cập nhật trạng thái, đẩy lên đầu danh sách
+      const newOrder = { ...order, assignedWorker: workerId, status: 'confirmed' as Order['status'], createdAt: new Date() };
+      const newOrders = [newOrder, ...allOrders.filter(o => o.id !== order.id)];
       await saveOrders(newOrders);
       Alert.alert('Thành công', 'Bạn đã nhận đơn thành công!');
+      setTimeout(() => {
+        Alert.alert('Thông báo cho khách', 'Đơn đã được nhận, thợ sẽ đến trong vòng 10 phút.');
+      }, 500);
+  // Thợ hủy nhận đơn: gỡ assignedWorker, trạng thái về pending, đẩy lên đầu danh sách
+  const handleUnassignOrder = async (order: Order) => {
+    if (order.assignedWorker !== workerId) return;
+    try {
+      const newOrder = { ...order, assignedWorker: undefined, status: 'pending' as Order['status'], createdAt: new Date() };
+      const newOrders = [newOrder, ...allOrders.filter(o => o.id !== order.id)];
+      await saveOrders(newOrders);
+      Alert.alert('Đã hủy nhận đơn', 'Đơn đã quay lại danh sách chờ.');
+    } catch {
+      Alert.alert('Lỗi', 'Không thể hủy nhận đơn!');
+    }
+  };
     } catch {
       Alert.alert('Lỗi', 'Không thể nhận đơn!');
+    }
+  };
+
+
+  // Thợ hủy nhận đơn: gỡ assignedWorker, trạng thái về pending, đẩy lên đầu danh sách
+  const handleUnassignOrder = async (order: Order) => {
+    if (order.assignedWorker !== workerId) return;
+    try {
+      const newOrder = { ...order, assignedWorker: undefined, status: 'pending' as Order['status'], createdAt: new Date() };
+      const newOrders = [newOrder, ...allOrders.filter(o => o.id !== order.id)];
+      await saveOrders(newOrders);
+      Alert.alert('Đã hủy nhận đơn', 'Đơn đã quay lại danh sách chờ.');
+    } catch {
+      Alert.alert('Lỗi', 'Không thể hủy nhận đơn!');
     }
   };
 
@@ -67,17 +96,17 @@ const WorkerScreen: React.FC<RoleScreenProps> = () => {
     }
   };
 
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [showDetail, setShowDetail] = useState(false);
   const handleOrderPress = (order: Order) => {
-    Alert.alert(
-      'Chi tiết đơn hàng',
-      `Khách hàng: ${order.customerName}\nSố điện thoại: ${order.phoneNumber}\nĐịa chỉ: ${order.address}\nDịch vụ: ${order.serviceType}\nThời gian yêu cầu: ${order.requestedTime}\nGhi chú: ${order.notes || 'Không có'}`,
-      [{ text: 'Đóng' }]
-    );
+    setSelectedOrder(order);
+    setShowDetail(true);
   };
 
+  // Chỉ hiển thị đơn chưa nhận hoặc đơn do thợ này nhận
   const filteredOrders = selectedStatus === 'all'
-    ? orders
-    : orders.filter(order => order.status === selectedStatus);
+    ? orders.filter(order => !order.assignedWorker || order.assignedWorker === workerId)
+    : orders.filter(order => (!order.assignedWorker || order.assignedWorker === workerId) && order.status === selectedStatus);
 
   return (
     <View style={styles.container}>
@@ -102,7 +131,6 @@ const WorkerScreen: React.FC<RoleScreenProps> = () => {
         data={filteredOrders}
         keyExtractor={item => item.id}
         renderItem={({ item }) => {
-          // Đơn chưa nhận: hiển thị nút Nhận đơn
           if (!item.assignedWorker) {
             return (
               <OrderCard
@@ -118,7 +146,6 @@ const WorkerScreen: React.FC<RoleScreenProps> = () => {
               </OrderCard>
             );
           }
-          // Đơn đã nhận bởi thợ này: cho phép cập nhật trạng thái
           if (item.assignedWorker === workerId) {
             return (
               <OrderCard
@@ -126,10 +153,15 @@ const WorkerScreen: React.FC<RoleScreenProps> = () => {
                 onPress={handleOrderPress}
                 showActions={true}
                 onStatusChange={handleStatusChange}
-              />
+              >
+                <CustomButton
+                  title="Hủy nhận đơn"
+                  onPress={() => handleUnassignOrder(item)}
+                  style={{ marginTop: 8, backgroundColor: Colors.cancelled }}
+                />
+              </OrderCard>
             );
           }
-          // Đơn đã có thợ khác nhận: chỉ xem
           return (
             <OrderCard
               order={item}
@@ -147,6 +179,12 @@ const WorkerScreen: React.FC<RoleScreenProps> = () => {
         contentContainerStyle={{ paddingBottom: 40 }}
         style={{ width: '100%' }}
         showsVerticalScrollIndicator={false}
+      />
+      <OrderDetailModal
+        visible={showDetail}
+        onClose={() => setShowDetail(false)}
+        order={selectedOrder}
+        role={'worker'}
       />
     </View>
   );

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "c1",
+    "name": "Nguyen Van A",
+    "phone": "0901234567",
+    "address": "123 Le Loi, Q.1, TP.HCM",
+    "avatar": "https://randomuser.me/api/portraits/men/32.jpg",
+    "note": "Khách quen, ưu tiên phục vụ."
+  },
+  {
+    "id": "c2",
+    "name": "Tran Thi B",
+    "phone": "0912345678",
+    "address": "456 Tran Hung Dao, Q.5, TP.HCM",
+    "avatar": "https://randomuser.me/api/portraits/women/44.jpg",
+    "note": "Yêu cầu sửa điện lạnh."
+  },
+  {
+    "id": "c3",
+    "name": "Le Van C",
+    "phone": "0987654321",
+    "address": "789 Nguyen Trai, Q.10, TP.HCM",
+    "avatar": "https://randomuser.me/api/portraits/men/65.jpg",
+    "note": "Nhà có trẻ nhỏ, cần sửa nhanh."
+  }
+]

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUser } from '../contexts/UserContext';
 import { View, Text, StyleSheet, Image, Modal, TouchableOpacity, View as RNView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, UserRole } from '../types';
@@ -18,6 +19,10 @@ interface WelcomeScreenProps {
 }
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, role, setRole, setShowAdminModal, setAdminPassword }) => {
+  const { setUserType, setUser, loadMockUsers } = useUser();
+  const [selectType, setSelectType] = React.useState<'customer' | 'worker' | null>(null);
+  const [userOptions, setUserOptions] = React.useState<any[]>([]);
+  const [showUserModal, setShowUserModal] = React.useState(false);
   const [showRoleSheet, setShowRoleSheet] = React.useState(false);
   const [showAdminPwModal, setShowAdminPwModal] = React.useState(false);
   const [adminPw, setAdminPw] = React.useState('');
@@ -34,15 +39,23 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, role, 
     navigation.navigate('ServiceForm');
   };
 
-  const handleSelectRole = (role: UserRole) => {
+  const handleSelectRole = async (role: UserRole) => {
     setShowRoleSheet(false);
     if (role === 'admin') {
       setShowAdminPwModal(true);
-    } else if (role === 'worker') {
-      setRole('worker');
-    } else {
-      setRole('customer');
+    } else if (role === 'worker' || role === 'customer') {
+      setSelectType(role);
+      const users = await loadMockUsers(role);
+      setUserOptions(users);
+      setShowUserModal(true);
     }
+  };
+
+  const handleChooseUser = (user: any) => {
+    setUserType(selectType);
+    setUser(user);
+    setShowUserModal(false);
+    setRole(selectType);
   };
 
   const handleAdminLogin = () => {
@@ -131,6 +144,33 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, role, 
           </RNView>
         </RNView>
       </Modal>
+      {/* Modal chọn user mẫu */}
+      <Modal
+        visible={showUserModal}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowUserModal(false)}
+      >
+        <RNView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)' }}>
+          <RNView style={{ backgroundColor: '#fff', borderRadius: 16, padding: 24, minWidth: 300 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' }}>
+              {selectType === 'customer' ? 'Chọn khách hàng mẫu' : 'Chọn thợ mẫu'}
+            </Text>
+            {userOptions.map((u) => (
+              <TouchableOpacity key={u.id} style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 10 }} onPress={() => handleChooseUser(u)}>
+                <Image source={{ uri: u.avatar }} style={{ width: 40, height: 40, borderRadius: 20, marginRight: 12 }} />
+                <View>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{u.name}</Text>
+                  <Text style={{ fontSize: 13, color: '#888' }}>{u.phone}</Text>
+                  {u.specialty && <Text style={{ fontSize: 13, color: '#888' }}>{u.specialty}</Text>}
+                </View>
+              </TouchableOpacity>
+            ))}
+            <CustomButton title="Đóng" onPress={() => setShowUserModal(false)} variant="outline" style={{ marginTop: 16 }} />
+          </RNView>
+        </RNView>
+      </Modal>
+
       {/* Modal nhập mật khẩu admin */}
       <Modal
         visible={showAdminPwModal}

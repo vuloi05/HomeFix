@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { CustomButton } from '../components/CustomButton';
 import { OrderCard } from '../components/OrderCard';
+import { OrderDetailModal } from '../components/OrderDetailModal';
 import { useOrderService } from '../services/orderService';
 import { useOrders } from '../contexts/OrderContext';
 import { Colors } from '../Constants/colors';
@@ -40,12 +41,11 @@ export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, ro
     }
   };
 
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [showDetail, setShowDetail] = useState(false);
   const handleOrderPress = (order: Order) => {
-    Alert.alert(
-      'Chi tiết đơn hàng',
-      `Khách hàng: ${order.customerName}\nSố điện thoại: ${order.phoneNumber}\nĐịa chỉ: ${order.address}\nDịch vụ: ${order.serviceType}\nThời gian yêu cầu: ${order.requestedTime}\nGhi chú: ${order.notes || 'Không có'}`,
-      [{ text: 'Đóng' }]
-    );
+    setSelectedOrder(order);
+    setShowDetail(true);
   };
 
   const getFilteredOrders = () => {
@@ -131,7 +131,7 @@ export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, ro
           <OrderCard
             order={item}
             onPress={handleOrderPress}
-            showActions={false} // chỉ xem, không thao tác
+            showActions={false}
           />
         )}
         refreshControl={
@@ -144,6 +144,12 @@ export const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation, ro
         ListEmptyComponent={renderEmptyState}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
+      />
+      <OrderDetailModal
+        visible={showDetail}
+        onClose={() => setShowDetail(false)}
+        order={selectedOrder}
+        role={'customer'}
       />
     </View>
   );

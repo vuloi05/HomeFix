@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUser } from '../contexts/UserContext';
 import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
@@ -18,15 +19,26 @@ interface ServiceFormScreenProps {
 }
 
 export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation, role }) => {
+  const { user, userType } = useUser();
   const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
   const [formData, setFormData] = useState<OrderFormData>({
-    customerName: '',
-    phoneNumber: '',
-    address: '',
+    customerName: user?.name || '',
+    phoneNumber: user?.phone || '',
+    address: user?.address || '',
     serviceType: '',
     requestedTime: '',
     notes: '',
   });
+
+  // Nếu user đổi, tự động cập nhật form
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      customerName: user?.name || '',
+      phoneNumber: user?.phone || '',
+      address: user?.address || '',
+    }));
+  }, [user]);
   const [errors, setErrors] = useState<Partial<OrderFormData>>({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -74,8 +86,8 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
 
     setIsLoading(true);
     try {
-      // Giả lập userId cho khách hàng (có thể lấy từ context đăng nhập thực tế)
-      const userId = 'customer-demo';
+      // Lấy userId thực tế từ context
+      const userId = user?.id || 'customer-demo';
       const orderId = await createOrder(formData, userId);
       navigation.navigate('Confirmation', { orderId });
     } catch (error) {

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "w1",
+    "name": "Pham Quang D",
+    "phone": "0932123456",
+    "specialty": "Điện nước",
+    "avatar": "https://randomuser.me/api/portraits/men/12.jpg",
+    "note": "Kinh nghiệm 5 năm, phục vụ tận nơi.",
+    "rating": 4.8
+  },
+  {
+    "id": "w2",
+    "name": "Nguyen Thi E",
+    "phone": "0943234567",
+    "specialty": "Điện lạnh",
+    "avatar": "https://randomuser.me/api/portraits/women/36.jpg",
+    "note": "Chuyên sửa máy lạnh, tủ lạnh.",
+    "rating": 4.6
+  },
+  {
+    "id": "w3",
+    "name": "Vo Van F",
+    "phone": "0976543210",
+    "specialty": "Thợ mộc",
+    "avatar": "https://randomuser.me/api/portraits/men/23.jpg",
+    "note": "Nhận đóng sửa đồ gỗ tại nhà.",
+    "rating": 4.7
+  }
+]
