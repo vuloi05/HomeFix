@@ -14,6 +14,7 @@ import { Alert, Modal, View, Text, TouchableOpacity } from 'react-native';
 import { CustomButton } from '../components/CustomButton';
 import { CustomInput } from '../components/CustomInput';
 import { Ionicons } from '@expo/vector-icons';
+import { ServiceSubCategoryScreen } from '../screens/ServiceSubCategoryScreen';
 
 const CustomerStack = createStackNavigator<RootStackParamList>();
 const CustomerTab = createBottomTabNavigator();
@@ -97,6 +98,11 @@ export const AppNavigator: React.FC = () => {
               name="Confirmation"
               children={(props) => <ConfirmationScreen {...props} role={role} />}
               options={{ title: 'Xác nhận', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
+            />
+            <CustomerStack.Screen
+              name="ServiceSubCategory"
+              component={ServiceSubCategoryScreen}
+              options={{ title: 'Chọn dịch vụ chi tiết', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
             />
           </CustomerStack.Navigator>
         )}

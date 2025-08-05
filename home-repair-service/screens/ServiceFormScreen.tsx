@@ -10,6 +10,7 @@ import { SERVICES } from '../Constants/services';
 import { useOrderService } from '../services/orderService';
 import { Colors } from '../Constants/colors';
 import { ServiceType, OrderFormData, UserRole } from '../types';
+import { ServiceSubCategory } from '../Constants/serviceSubCategories';
 
 type ServiceFormScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ServiceForm'>;
 
@@ -18,9 +19,28 @@ interface ServiceFormScreenProps {
   role: UserRole;
 }
 
+import { useRoute } from '@react-navigation/native';
+
 export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation, role }) => {
+  const route = useRoute();
   const { user, userType } = useUser();
   const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
+  const [selectedSubCategories, setSelectedSubCategories] = useState<ServiceSubCategory[]>([]);
+
+  // Nhận lại dịch vụ con đã chọn từ ServiceSubCategoryScreen
+  React.useEffect(() => {
+    // @ts-ignore
+    if (route.params && route.params.selectedSubCategories) {
+      // @ts-ignore
+      setSelectedSubCategories(route.params.selectedSubCategories);
+    }
+    // @ts-ignore
+    if (route.params && route.params.parentId) {
+      // @ts-ignore
+      const service = SERVICES.find(s => s.id === route.params.parentId);
+      if (service) setSelectedService(service);
+    }
+  }, [route.params]);
   const [formData, setFormData] = useState<OrderFormData>({
     customerName: user?.name || '',
     phoneNumber: user?.phone || '',
@@ -72,9 +92,14 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
     return Object.keys(newErrors).length === 0;
   };
 
+
+  // Khi chọn dịch vụ chính, chuyển sang màn chọn dịch vụ con
   const handleServiceSelect = (service: ServiceType) => {
-    setSelectedService(service);
-    setFormData(prev => ({ ...prev, serviceType: service.name }));
+    navigation.navigate('ServiceSubCategory', {
+      parentId: service.id,
+      parentName: service.name,
+      selected: selectedSubCategories.map(sub => sub.id),
+    });
   };
 
   const { createOrder } = useOrderService();
@@ -121,10 +146,18 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
             <ServiceCard
               key={service.id}
               service={service}
-              onPress={handleServiceSelect}
+              onPress={() => handleServiceSelect(service)}
               selected={selectedService?.id === service.id}
             />
           ))}
+          {selectedService && selectedSubCategories.length > 0 && (
+            <View style={{ marginTop: 10, padding: 10, backgroundColor: '#f0f8ff', borderRadius: 8 }}>
+              <Text style={{ fontWeight: 'bold', marginBottom: 4 }}>Dịch vụ chi tiết đã chọn:</Text>
+              {selectedSubCategories.map(sub => (
+                <Text key={sub.id} style={{ marginLeft: 8 }}>• {sub.name}</Text>
+              ))}
+            </View>
+          )}
         </View>
 
         {/* Customer Information */}
