@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from 're
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { CustomButton } from '../components/CustomButton';
-import { CustomInput } from '../components/CustomInput';
+// import { CustomInput } from '../components/CustomInput';
 import { ServiceCard } from '../components/ServiceCard';
 import { SERVICES } from '../Constants/services';
 import { useOrderService } from '../services/orderService';
@@ -160,64 +160,10 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
           )}
         </View>
 
-        {/* Customer Information */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Thông tin khách hàng</Text>
-          
-          <CustomInput
-            label="Họ và tên"
-            placeholder="Nhập họ và tên"
-            value={formData.customerName}
-            onChangeText={(text) => handleInputChange('customerName', text)}
-            error={errors.customerName}
-          />
 
-          <CustomInput
-            label="Số điện thoại"
-            placeholder="Nhập số điện thoại"
-            value={formData.phoneNumber}
-            onChangeText={(text) => handleInputChange('phoneNumber', text)}
-            error={errors.phoneNumber}
-            keyboardType="phone-pad"
-          />
+        {/* Nút Tiếp tục đã bị loại bỏ, chỉ còn chọn dịch vụ và chuyển sang màn hình dịch vụ chi tiết */}
 
-          <CustomInput
-            label="Địa chỉ"
-            placeholder="Nhập địa chỉ chi tiết"
-            value={formData.address}
-            onChangeText={(text) => handleInputChange('address', text)}
-            error={errors.address}
-            multiline
-            numberOfLines={3}
-          />
-
-          <CustomInput
-            label="Thời gian yêu cầu"
-            placeholder="VD: Sáng mai, Chiều nay, Tối thứ 7..."
-            value={formData.requestedTime}
-            onChangeText={(text) => handleInputChange('requestedTime', text)}
-            error={errors.requestedTime}
-          />
-
-          <CustomInput
-            label="Ghi chú (tùy chọn)"
-            placeholder="Mô tả chi tiết vấn đề cần sửa chữa"
-            value={formData.notes ?? ''}
-            onChangeText={(text) => handleInputChange('notes', text)}
-            multiline
-            numberOfLines={4}
-          />
-        </View>
-
-        {/* Submit Button */}
-        <View style={styles.buttonContainer}>
-          <CustomButton
-            title={isLoading ? 'Đang gửi...' : 'Gửi yêu cầu'}
-            onPress={handleSubmit}
-            disabled={isLoading}
-            style={styles.submitButton}
-          />
-        </View>
+        {/* Submit Button đã loại bỏ, chỉ còn nút Tiếp tục */}
       </View>
 
       {isLoading && (

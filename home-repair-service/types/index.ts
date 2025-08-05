@@ -1,4 +1,5 @@
 
+import { ServiceSubCategory } from '../Constants/serviceSubCategories';
 export interface OrderFormData {
   customerName: string;
   phoneNumber: string;
@@ -6,6 +7,7 @@ export interface OrderFormData {
   serviceType: string;
   requestedTime: string;
   notes?: string;
+  subServices?: { id: string; name: string }[];
 }
 export interface ServiceType {
   id: string;
@@ -27,6 +29,7 @@ export interface Order {
   notes?: string;
   userId: string; // id/email/sdt khách hàng
   assignedWorker?: string; // id/thông tin thợ được giao
+  subServices?: { id: string; name: string }[];
 }
 
 
@@ -39,6 +42,7 @@ export type RootStackParamList = {
   Admin: undefined;
   CustomerTab: { screen?: 'ServiceForm' | 'OrderList' } | undefined;
   ServiceSubCategory: { parentId: string; parentName: string; selected: string[] };
+  CustomerInfo: { selectedService: ServiceType; selectedSubCategories: any[] };
 };
 
 export type UserRole = 'customer' | 'worker' | 'admin' | null;

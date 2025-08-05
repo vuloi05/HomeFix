@@ -91,10 +91,22 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           <Text style={styles.value}>{order.address}</Text>
         </View>
         
+
         <View style={styles.row}>
           <Text style={styles.label}>Dịch vụ:</Text>
           <Text style={styles.value}>{order.serviceType}</Text>
         </View>
+
+        {Array.isArray(order.subServices) && order.subServices.length > 0 && (
+          <View style={styles.row}>
+            <Text style={styles.label}>Chi tiết:</Text>
+            <View style={{ flex: 1 }}>
+              {order.subServices.map((sub, idx) => (
+                <Text key={sub.id || idx} style={styles.value}>• {sub.name}</Text>
+              ))}
+            </View>
+          </View>
+        )}
         
         <View style={styles.row}>
           <Text style={styles.label}>Thời gian yêu cầu:</Text>

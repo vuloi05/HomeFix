@@ -15,6 +15,7 @@ import { CustomButton } from '../components/CustomButton';
 import { CustomInput } from '../components/CustomInput';
 import { Ionicons } from '@expo/vector-icons';
 import { ServiceSubCategoryScreen } from '../screens/ServiceSubCategoryScreen';
+import { CustomerInfoScreen } from '../screens/CustomerInfoScreen';
 
 const CustomerStack = createStackNavigator<RootStackParamList>();
 const CustomerTab = createBottomTabNavigator();
@@ -103,6 +104,11 @@ export const AppNavigator: React.FC = () => {
               name="ServiceSubCategory"
               component={ServiceSubCategoryScreen}
               options={{ title: 'Chọn dịch vụ chi tiết', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
+            />
+            <CustomerStack.Screen
+              name="CustomerInfo"
+              component={CustomerInfoScreen}
+              options={{ title: 'Thông tin khách hàng', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
             />
           </CustomerStack.Navigator>
         )}

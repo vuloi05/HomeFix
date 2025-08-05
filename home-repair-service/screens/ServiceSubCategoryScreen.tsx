@@ -22,10 +22,8 @@ export const ServiceSubCategoryScreen: React.FC<ServiceSubCategoryScreenProps> =
 
   const handleConfirm = () => {
     const selectedSubs = subCategories.filter(sub => selectedIds.includes(sub.id));
-    navigation.navigate('ServiceForm', {
-      parentId,
-      parentName,
-      selectedSubIds: selectedIds,
+    navigation.navigate('CustomerInfo', {
+      selectedService: { id: parentId, name: parentName },
       selectedSubCategories: selectedSubs,
     });
   };
