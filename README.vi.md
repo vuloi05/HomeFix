@@ -35,7 +35,7 @@ HomeFix là ứng dụng di động phát triển bằng React Native (Expo) và
 - Giao diện hiện đại, tối ưu mobile.
 - Đa dạng trạng thái đơn, popup chi tiết đơn hàng theo vai trò.
 
-## � Cài đặt & chạy thử
+## 🚀 Cài đặt & chạy thử
 
 1. **Clone repository**
    ```bash
@@ -46,14 +46,62 @@ HomeFix là ứng dụng di động phát triển bằng React Native (Expo) và
    ```bash
    npm install
    ```
-3. **Chạy ứng dụng**
+
+3. **Cài đặt & chạy backend thực tế**
+   - Di chuyển vào thư mục backend (ví dụ: `cd ../homefix-backend`)
+   - Cài đặt Node.js, MongoDB
+   - Tạo file `.env` (xem mẫu trong backend)
+   - Chạy backend:
+     ```bash
+     npm install
+     npm start
+     ```
+   - Mặc định backend chạy ở port 4000
+
+4. **Đổi địa chỉ backend khi chạy trên thiết bị thật (Expo Go)**
+   - Lấy IP LAN máy tính bằng lệnh `ipconfig` (Windows) hoặc `ifconfig` (Mac/Linux)
+   - Đổi tất cả URL backend trong app từ `localhost:4000` sang `http://<IP_LAN>:4000`
+   - Ví dụ: `http://10.174.120.161:4000`
+   - Đảm bảo điện thoại và máy tính cùng mạng WiFi/LAN
+
+5. **Kiểm tra kết nối backend từ điện thoại**
+   - Mở trình duyệt trên điện thoại, truy cập `http://<IP_LAN>:4000/api/chat/` để kiểm tra
+   - Nếu không truy cập được, kiểm tra lại mạng, firewall
+
+6. **Chạy ứng dụng mobile**
    ```bash
    npm run android   # Android
    npm run ios       # iOS (macOS)
    npm run web       # Web
    ```
 
-## 🧱 Tổng quan kiến trúc
+## 🧱 Tổng quan kiến trúc & API
+
+- **Backend thực tế**: Node.js, Express, MongoDB, socket.io
+- **Các API chính**:
+  - Đăng nhập: `POST /api/auth/login`
+  - Đăng ký: `POST /api/auth/register`
+  - Lấy thông tin user: `GET /api/auth/me`
+  - Lấy lịch sử chat: `GET /api/chat/:orderId`
+  - Gửi ảnh chat: `POST /api/chat/upload` (multipart/form-data)
+  - Gửi tin nhắn realtime: socket.io event `message`, `typing`, `read`, `online`
+
+## 💬 Hướng dẫn sử dụng tính năng chat
+
+- Chat realtime giữa khách và thợ (chỉ khi đơn đã được nhận)
+- Gửi/nhận tin nhắn, gửi ảnh, trạng thái online/offline, phân trang lịch sử chat
+- Khi dùng Expo Go, phải đổi URL backend sang IP LAN
+- Đảm bảo user đã đăng nhập, có token để xác thực API
+- Nếu không tải được lịch sử chat, kiểm tra lại token, kết nối mạng, IP backend
+
+## 🛠️ Hướng dẫn debug & xử lý lỗi
+
+- Kiểm tra log lỗi trên app (console, Alert)
+- Kiểm tra log backend (terminal)
+- Kiểm tra kết nối mạng giữa điện thoại và máy tính
+- Kiểm tra token user khi gọi API
+- Kiểm tra response API bằng Postman hoặc trình duyệt
+- Nếu upload ảnh lỗi, kiểm tra endpoint `/api/chat/upload` và quyền ghi thư mục uploads
 
 - **Frontend**: React Native (Expo), TypeScript
 - **Quản lý state**: React Context API + AsyncStorage

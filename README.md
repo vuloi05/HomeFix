@@ -68,13 +68,16 @@ HomeFix is a mobile application developed with React Native (Expo) and TypeScrip
 
 ```
 home-repair-service/
-├── components/          # Reusable components
-├── screens/            # App screens
-├── services/           # API services
-├── Constants/          # App constants
-├── types/              # TypeScript types
-├── Navigation/         # Navigation setup
-└── App.tsx            # Main app component
+├── components/          # Reusable UI components
+├── screens/             # App screens
+├── services/            # API services
+├── Constants/           # App constants
+├── types/               # TypeScript type definitions
+├── Navigation/          # Navigation
+├── assets/              # Images, icons, splash
+├── contexts/            # React Contexts
+├── mock-data/           # Sample users (customers/workers)
+└── App.tsx              # Root component
 ```
 
 ## 🧑‍💻 Using & Editing Mock Data

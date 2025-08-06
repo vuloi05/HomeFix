@@ -11,6 +11,7 @@ export interface UserInfo {
   note?: string;
   specialty?: string;
   rating?: number;
+  token?: string;
 }
 
 interface UserContextType {
