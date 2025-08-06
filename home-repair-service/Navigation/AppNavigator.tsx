@@ -16,6 +16,7 @@ import { CustomInput } from '../components/CustomInput';
 import { Ionicons } from '@expo/vector-icons';
 import { ServiceSubCategoryScreen } from '../screens/ServiceSubCategoryScreen';
 import { CustomerInfoScreen } from '../screens/CustomerInfoScreen';
+import { ChatScreen } from '../screens/ChatScreen';
 
 const CustomerStack = createStackNavigator<RootStackParamList>();
 const CustomerTab = createBottomTabNavigator();
@@ -110,6 +111,11 @@ export const AppNavigator: React.FC = () => {
               component={CustomerInfoScreen}
               options={{ title: 'Thông tin khách hàng', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
             />
+            <CustomerStack.Screen
+              name="Chat"
+              component={ChatScreen}
+              options={{ title: 'Chat', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
+            />
           </CustomerStack.Navigator>
         )}
         {role === 'worker' && (
@@ -126,6 +132,11 @@ export const AppNavigator: React.FC = () => {
               name="Worker"
               children={(props) => <WorkerScreen {...props} role={role} />}
               options={{ title: 'Trang thợ', headerTitleAlign: 'center' }}
+            />
+            <WorkerStack.Screen
+              name="Chat"
+              component={ChatScreen}
+              options={{ title: 'Chat', headerTitleAlign: 'center', headerLeft: getHeaderLeft(setRole) }}
             />
           </WorkerStack.Navigator>
         )}

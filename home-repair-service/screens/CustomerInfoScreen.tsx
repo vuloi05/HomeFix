@@ -68,7 +68,6 @@ const CustomerInfoScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
-        <Text style={styles.title}>Thông tin khách hàng</Text>
         <Text style={styles.sectionTitle}>Dịch vụ đã chọn</Text>
         <Text style={{ fontWeight: 'bold', marginBottom: 4 }}>{selectedService?.name}</Text>
         {selectedSubCategories?.length > 0 && selectedSubCategories.map((sub: any) => (

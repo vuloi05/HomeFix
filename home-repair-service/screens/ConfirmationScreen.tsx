@@ -52,22 +52,7 @@ export const ConfirmationScreen: React.FC<ConfirmationScreenProps> = ({ navigati
           <Text style={styles.orderId}>#{orderId.slice(-6)}</Text>
         </View>
 
-        {/* Next Steps */}
-        <View style={styles.stepsContainer}>
-          <Text style={styles.stepsTitle}>Các bước tiếp theo:</Text>
-          <View style={styles.step}>
-            <Text style={styles.stepNumber}>1</Text>
-            <Text style={styles.stepText}>Chúng tôi sẽ xác nhận đơn hàng trong vòng 5 phút</Text>
-          </View>
-          <View style={styles.step}>
-            <Text style={styles.stepNumber}>2</Text>
-            <Text style={styles.stepText}>Thợ sẽ liên hệ để xác nhận thời gian và địa điểm</Text>
-          </View>
-          <View style={styles.step}>
-            <Text style={styles.stepNumber}>3</Text>
-            <Text style={styles.stepText}>Thợ sẽ đến đúng thời gian đã hẹn</Text>
-          </View>
-        </View>
+
       </View>
 
       {/* Action Buttons */}

@@ -14,7 +14,7 @@ export interface ServiceType {
   name: string;
   description: string;
   icon: string;
-  price?: string;
+  // price?: string; // Đã loại bỏ trường price
 }
 
 export interface Order {
@@ -43,6 +43,7 @@ export type RootStackParamList = {
   CustomerTab: { screen?: 'ServiceForm' | 'OrderList' } | undefined;
   ServiceSubCategory: { parentId: string; parentName: string; selected: string[] };
   CustomerInfo: { selectedService: ServiceType; selectedSubCategories: any[] };
+  Chat: { orderId: string; partnerName: string };
 };
 
 export type UserRole = 'customer' | 'worker' | 'admin' | null;

@@ -136,9 +136,6 @@ export const ServiceFormScreen: React.FC<ServiceFormScreenProps> = ({ navigation
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
-        <Text style={styles.title}>Đặt dịch vụ sửa chữa</Text>
-        <Text style={styles.subtitle}>Chọn dịch vụ bạn cần</Text>
-
         {/* Service Selection */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Loại dịch vụ</Text>

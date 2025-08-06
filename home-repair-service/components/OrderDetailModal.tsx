@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../types';
 import { Order } from '../types';
 import { Colors } from '../Constants/colors';
 import { UserType, UserInfo } from '../contexts/UserContext';
@@ -12,6 +15,7 @@ interface OrderDetailModalProps {
 }
 
 export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ visible, onClose, order, role }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [worker, setWorker] = useState<UserInfo | null>(null);
   const [customer, setCustomer] = useState<UserInfo | null>(null);
 
@@ -38,6 +42,18 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ visible, onC
   }, [order]);
 
   if (!order) return null;
+
+  // Xác định điều kiện hiển thị nút Chat
+  const canChat = order.assignedWorker && ((role === 'customer' && worker) || (role === 'worker' && customer));
+  // Lấy tên đối phương
+  const partnerName = role === 'customer' ? worker?.name : customer?.name;
+
+  const handleChat = () => {
+    navigation.navigate('Chat', {
+      orderId: order.id,
+      partnerName: partnerName || 'Đối tác',
+    });
+  };
 
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
@@ -82,6 +98,11 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ visible, onC
               </View>
             )}
           </ScrollView>
+          {canChat && (
+            <TouchableOpacity style={styles.chatBtn} onPress={handleChat}>
+              <Text style={styles.chatText}>Chat</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
             <Text style={styles.closeText}>Đóng</Text>
           </TouchableOpacity>
@@ -89,6 +110,7 @@ export const OrderDetailModal: React.FC<OrderDetailModalProps> = ({ visible, onC
       </View>
     </Modal>
   );
+// ...existing code...
 };
 
 const styles = StyleSheet.create({
@@ -149,6 +171,19 @@ const styles = StyleSheet.create({
   userInfo: {
     fontSize: 13,
     color: '#555',
+  },
+  chatBtn: {
+    marginTop: 18,
+    alignSelf: 'center',
+    backgroundColor: '#2196f3',
+    borderRadius: 8,
+    paddingHorizontal: 28,
+    paddingVertical: 10,
+  },
+  chatText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
   closeBtn: {
     marginTop: 18,

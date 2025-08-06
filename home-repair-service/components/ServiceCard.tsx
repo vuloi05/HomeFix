@@ -29,9 +29,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <View style={styles.content}>
         <Text style={styles.title}>{service.name}</Text>
         <Text style={styles.description}>{service.description}</Text>
-        {service.price && (
-          <Text style={styles.price}>{service.price}</Text>
-        )}
+        {/* Đã loại bỏ hiển thị giá vì không còn trường price */}
       </View>
       {selected && (
         <View style={styles.checkmark}>
